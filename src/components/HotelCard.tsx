@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
 import Button from "./Button";
 import { formatDate } from "../utils/date";
-import { HotelCardProps } from "../types/hotelCard";
+import { Hotel } from "../types/generated";
 
 const Card = styled.div`
   display: grid;
@@ -90,33 +90,41 @@ const Description = styled.p`
   line-height: ${({ theme }) => theme.lineHeight.medium};
 `;
 
-export const HotelCard = ({
-  name,
-  description,
-  city,
-  country,
-  rating,
-  price,
-  startDate,
-  endDate,
-  image,
-  onShowReviews,
-}: HotelCardProps) => {
-  const descriptionText = documentToPlainTextString(description.json);
-  const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+interface HotelCardProps {
+  hotel: Hotel;
+  onShowReviews: () => void;
+}
+
+export const HotelCard = ({ hotel, onShowReviews }: HotelCardProps) => {
+  const descriptionText = documentToPlainTextString(
+    hotel.description?.json || {}
+  );
+  const stars =
+    "★".repeat(hotel.rating || 0) + "☆".repeat(5 - (hotel.rating || 0));
 
   return (
     <Card>
       <ImageContainer>
-        {image ? <img src={image.url} alt={image.title || name} /> : "IMAGE"}
+        {hotel.imagesCollection?.items[0]?.url ? (
+          <img
+            src={hotel.imagesCollection.items[0].url}
+            alt={
+              hotel.imagesCollection.items[0].title ||
+              hotel.name ||
+              "Hotel Image"
+            }
+          />
+        ) : (
+          "IMAGE"
+        )}
       </ImageContainer>
 
       <Content>
         <Header>
           <div>
-            <Title>{name}</Title>
+            <Title>{hotel.name}</Title>
             <Location>
-              {city} - {country}
+              {hotel.city} - {hotel.country}
             </Location>
           </div>
           <div>{stars}</div>
@@ -131,11 +139,11 @@ export const HotelCard = ({
 
           <PriceContainer>
             <PriceAmount>
-              {price.value}
-              {price.symbol}
+              {hotel.price?.value}
+              {hotel.price?.symbol}
             </PriceAmount>
             <DateRange>
-              {formatDate(startDate)} - {formatDate(endDate)}
+              {formatDate(hotel.startDate)} - {formatDate(hotel.endDate)}
             </DateRange>
           </PriceContainer>
         </Footer>
