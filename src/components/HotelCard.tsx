@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
 import Button from "./Button";
 import { formatDate } from "../utils/date";
-import { Hotel } from "../types/generated";
+import { Hotel, Review } from "../types/generated";
+import { useLazyQuery } from "@apollo/client";
+import { GET_REVIEWS } from "../graphql/queries";
+import { GetHotelReviewsQuery } from "../types/generated";
+import ReviewList from "./ReviewList";
 
 const Card = styled.div`
   display: grid;
@@ -90,12 +94,27 @@ const Description = styled.p`
   line-height: ${({ theme }) => theme.lineHeight.medium};
 `;
 
-interface HotelCardProps {
-  hotel: Hotel;
-  onShowReviews: () => void;
-}
+const PlaceholderImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.gray};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSize.large};
+`;
 
-export const HotelCard = ({ hotel, onShowReviews }: HotelCardProps) => {
+export const HotelCard = ({ hotel }: { hotel: Hotel }) => {
+  const [getReviews, { loading: reviewsLoading, data: reviewsData }] =
+    useLazyQuery<GetHotelReviewsQuery>(GET_REVIEWS, {
+      variables: { hotelId: hotel.sys.id },
+    });
+
+  const handleShowReviews = async () => {
+    await getReviews();
+  };
+
   const descriptionText = documentToPlainTextString(
     hotel.description?.json || {}
   );
@@ -115,7 +134,11 @@ export const HotelCard = ({ hotel, onShowReviews }: HotelCardProps) => {
             }
           />
         ) : (
-          "IMAGE"
+          <PlaceholderImage>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+            </svg>
+          </PlaceholderImage>
         )}
       </ImageContainer>
 
@@ -133,8 +156,12 @@ export const HotelCard = ({ hotel, onShowReviews }: HotelCardProps) => {
         <Description>{descriptionText}</Description>
 
         <Footer>
-          <Button variant="primary" onClick={onShowReviews}>
-            Show reviews
+          <Button
+            variant="primary"
+            onClick={handleShowReviews}
+            disabled={reviewsLoading}
+          >
+            {reviewsLoading ? "Loading reviews..." : "Show Reviews"}
           </Button>
 
           <PriceContainer>
@@ -147,6 +174,14 @@ export const HotelCard = ({ hotel, onShowReviews }: HotelCardProps) => {
             </DateRange>
           </PriceContainer>
         </Footer>
+
+        {reviewsData?.reviewCollection?.items && (
+          <ReviewList
+            reviews={reviewsData.reviewCollection.items.filter(
+              (review): review is Review => review !== null
+            )}
+          />
+        )}
       </Content>
     </Card>
   );
