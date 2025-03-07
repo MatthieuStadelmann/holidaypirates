@@ -6,6 +6,7 @@ export const theme = {
     secondaryHover: "#f5b520",
     white: "#FFFFFF",
     gray: "#666666",
+    lightGray: "#e5e5e5"
   },
   spacing: {
     small: "8px",

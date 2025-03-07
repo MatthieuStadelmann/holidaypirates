@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import type { ButtonProps, ExtendedButtonProps } from "../types/button";
-
-type ButtonVariant = "primary" | "secondary" | "outline";
+import type { ButtonVariant, ExtendedButtonProps } from "../types/button";
 
 const getVariantStyles = (variant: ButtonVariant = "primary") => {
   switch (variant) {
@@ -18,7 +16,7 @@ const getVariantStyles = (variant: ButtonVariant = "primary") => {
   }
 };
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<{ $variant: string }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -29,11 +27,11 @@ const StyledButton = styled.button<ButtonProps>`
   padding: ${({ theme }) => `${theme.spacing.medium} ${theme.spacing.large}`};
   font-size: ${({ theme }) => theme.fontSize.medium};
 
-  ${(props) => getVariantStyles(props.variant)}
+  ${(props) => getVariantStyles(props.$variant as ButtonVariant)}
 `;
 
 const Button = ({ variant, ...props }: ExtendedButtonProps) => {
-  return <StyledButton variant={variant} {...props} />;
+  return <StyledButton $variant={variant} {...props} />;
 };
 
 export default Button;

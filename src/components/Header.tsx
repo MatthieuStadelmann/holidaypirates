@@ -6,11 +6,10 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
 `;
 
 const Container = styled.div`
-  max-width: 1340px;
   width: 100%;
   margin: 0 auto;
   padding: 0 1rem;

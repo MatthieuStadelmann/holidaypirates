@@ -7,7 +7,7 @@ import { useState } from "react";
 import { GetHotelsQuery, Hotel } from "../types/generated";
 
 const Container = styled.div`
-  max-width: 1340px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 `;
@@ -46,7 +46,11 @@ export const HotelList = () => {
   return (
     <Container>
       <LoadButton>
-        <Button variant="primary" onClick={handleLoadHotels} disabled={loading}>
+        <Button
+          $variant="primary"
+          onClick={handleLoadHotels}
+          disabled={loading}
+        >
           {data ? "Reload hotels" : "Load hotels"}
         </Button>
         {lastUpdated && <LastUpdated>Last updated: {lastUpdated}</LastUpdated>}
@@ -61,11 +65,7 @@ export const HotelList = () => {
             {data.hotelCollection.items.map((hotel) => {
               if (!hotel) return null;
 
-              return (
-                <HotelCard
-                  hotel={hotel as Hotel}
-                />
-              );
+              return <HotelCard key={hotel.sys.id} hotel={hotel as Hotel} />;
             })}
           </div>
         )

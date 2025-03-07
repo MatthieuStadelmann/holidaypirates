@@ -1,5 +1,6 @@
+export type ButtonVariant = "primary" | "secondary";
 export interface ButtonProps {
-  variant: "primary" | "secondary";
+  $variant: ButtonVariant;
 }
 
 export interface ExtendedButtonProps
