@@ -176,7 +176,7 @@ export const HotelCard = ({ hotel }: { hotel: Hotel }) => {
           <Description>{descriptionText}</Description>
 
           <Footer>
-            <Button variant="primary" onClick={handleShowReviews}>
+            <Button $variant="primary" onClick={handleShowReviews}>
               {showReviews ? "Hide Reviews" : "Show Reviews"}
             </Button>
 
