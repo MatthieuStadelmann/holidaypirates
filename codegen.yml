@@ -1,0 +1,12 @@
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/gyfunrv4a4ak:
+      headers:
+        Authorization: "Bearer 77eb48491df9a767a36ff6d98b6fd18c4d35bb38c10e873503a8203ff8594a85"
+documents: "src/**/*.{ts,tsx}"
+generates:
+  src/types/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+    config:
+      onlyOperationTypes: true 
