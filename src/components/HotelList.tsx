@@ -1,10 +1,10 @@
 import { useLazyQuery } from "@apollo/client";
 import { GET_HOTELS } from "../graphql/queries";
-import { GetHotelsQuery } from "../types/contentful";
 import Button from "./Button";
 import { HotelCard } from "./HotelCard";
 import styled from "styled-components";
 import { useState } from "react";
+import { GetHotelsQuery, Hotel } from "../types/generated";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -47,7 +47,7 @@ export const HotelList = () => {
     <Container>
       <LoadButton>
         <Button variant="primary" onClick={handleLoadHotels} disabled={loading}>
-          {data ? "Reload hotels" : "Load hotels"}
+          {data ? "Reload hotels" : "Load hotels!"}
         </Button>
         {lastUpdated && <LastUpdated>Last updated: {lastUpdated}</LastUpdated>}
       </LoadButton>
@@ -63,16 +63,7 @@ export const HotelList = () => {
 
               return (
                 <HotelCard
-                  key={hotel.sys.id}
-                  name={hotel.name}
-                  description={hotel.description}
-                  city={hotel.city}
-                  country={hotel.country}
-                  rating={hotel.rating}
-                  price={hotel.price as any}
-                  startDate={hotel.startDate}
-                  endDate={hotel.endDate}
-                  image={hotel.imagesCollection?.items[0]}
+                  hotel={hotel as Hotel}
                   onShowReviews={() =>
                     console.log("Show reviews for:", hotel.sys.id)
                   }
