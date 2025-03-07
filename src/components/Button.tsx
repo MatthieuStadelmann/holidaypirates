@@ -1,11 +1,7 @@
 import styled, { css } from "styled-components";
+import type { ButtonProps, ExtendedButtonProps } from "../types/button";
 
 type ButtonVariant = "primary" | "secondary" | "outline";
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  fullWidth?: boolean;
-}
 
 const getVariantStyles = (variant: ButtonVariant = "primary") => {
   switch (variant) {
@@ -34,15 +30,10 @@ const StyledButton = styled.button<ButtonProps>`
   font-size: ${({ theme }) => theme.fontSize.medium};
 
   ${(props) => getVariantStyles(props.variant)}
-  ${(props) =>
-    props.fullWidth &&
-    css`
-      width: 100%;
-    `}
 `;
 
-const Button = ({ children, ...props }: ButtonProps) => {
-  return <StyledButton {...props}>{children}</StyledButton>;
+const Button = ({ variant, ...props }: ExtendedButtonProps) => {
+  return <StyledButton variant={variant} {...props} />;
 };
 
 export default Button;

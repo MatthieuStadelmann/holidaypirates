@@ -2,25 +2,7 @@ import styled from "styled-components";
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
 import Button from "./Button";
 import { formatDate } from "../utils/date";
-
-type Price = {
-  value: number;
-  currency: string;
-  symbol: string;
-};
-
-interface HotelCardProps {
-  name: string;
-  description: { json: any };
-  city: string;
-  country: string;
-  rating: number;
-  price: Price;
-  startDate: string;
-  endDate: string;
-  image?: { url: string; title: string };
-  onShowReviews: () => void;
-}
+import { HotelCardProps } from "../types/hotelCard";
 
 const Card = styled.div`
   display: grid;
