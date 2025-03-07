@@ -46,8 +46,12 @@ export const HotelList = () => {
   return (
     <Container>
       <LoadButton>
-        <Button variant="primary" onClick={handleLoadHotels} disabled={loading}>
-          {data ? "Reload hotels" : "Load hotels!"}
+        <Button
+          $variant="primary"
+          onClick={handleLoadHotels}
+          disabled={loading}
+        >
+          {data ? "Reload hotels" : "Load hotels"}
         </Button>
         {lastUpdated && <LastUpdated>Last updated: {lastUpdated}</LastUpdated>}
       </LoadButton>
@@ -61,14 +65,7 @@ export const HotelList = () => {
             {data.hotelCollection.items.map((hotel) => {
               if (!hotel) return null;
 
-              return (
-                <HotelCard
-                  hotel={hotel as Hotel}
-                  onShowReviews={() =>
-                    console.log("Show reviews for:", hotel.sys.id)
-                  }
-                />
-              );
+              return <HotelCard key={hotel.sys.id} hotel={hotel as Hotel} />;
             })}
           </div>
         )
