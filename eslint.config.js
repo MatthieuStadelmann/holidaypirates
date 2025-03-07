@@ -16,12 +16,6 @@ export default tseslint.config(
         React: true,
       },
       parser: tseslint.parser,
-      parserOptions: {
-        project: ["./tsconfig.app.json", "./tsconfig.node.json"],
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
     },
     plugins: {
       "react-hooks": reactHooks,
