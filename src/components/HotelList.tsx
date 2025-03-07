@@ -51,7 +51,6 @@ export const HotelList = () => {
         </Button>
         {lastUpdated && <LastUpdated>Last updated: {lastUpdated}</LastUpdated>}
       </LoadButton>
-
       {loading ? (
         <div>Loading hotels...</div>
       ) : error ? (
