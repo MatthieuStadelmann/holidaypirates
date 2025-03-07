@@ -30,8 +30,8 @@ const StyledButton = styled.button<{ $variant: string }>`
   ${(props) => getVariantStyles(props.$variant as ButtonVariant)}
 `;
 
-const Button = ({ variant, ...props }: ExtendedButtonProps) => {
-  return <StyledButton $variant={variant} {...props} />;
+const Button = ({ $variant, ...props }: ExtendedButtonProps) => {
+  return <StyledButton $variant={$variant} {...props} />;
 };
 
 export default Button;
