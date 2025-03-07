@@ -47,7 +47,7 @@ export const HotelList = () => {
     <Container>
       <LoadButton>
         <Button variant="primary" onClick={handleLoadHotels} disabled={loading}>
-          {data ? "Reload hotelsss" : "Load hotels"}
+          {data ? "Reload hotels" : "Load hotels"}
         </Button>
         {lastUpdated && <LastUpdated>Last updated: {lastUpdated}</LastUpdated>}
       </LoadButton>
