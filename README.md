@@ -4,8 +4,8 @@ A React application that displays hotels and their reviews, built with TypeScrip
 
 ## Prerequisites
 
-- Node.js (v18 or higher recommended)
-- npm
+- Node.js (v18.x.x or higher, v20.x.x recommended)
+- npm (v9.x.x or higher)
 
 ## Getting Started
 
