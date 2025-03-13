@@ -9,8 +9,8 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
   return (
     <div>
       {reviews.map(
-        (review, index) =>
-          review && <Review key={index} review={review} />
+        (review) =>
+          review && <Review key={review.sys.id} review={review} />
       )}
     </div>
   );
